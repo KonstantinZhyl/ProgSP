@@ -30,17 +30,20 @@ public class BudStudent extends Student {
         if (x <= 5) {
             System.out.println("Стипендия только в мечтах");
         }
-        if (x > 5) {
-            System.out.println("Стипендия - 60 БУНов");
-        }
-        if (x > 6) {
-            System.out.println("Стипендия - 70 БУНов");
+        if (x > 9) {
+            System.out.println("Стипендия - 105 БУНов");
+            return;
         }
         if (x > 8) {
             System.out.println("Стипендия - 86 БУНов");
+            return;
         }
-        if (x > 9) {
-            System.out.println("Стипендия - 105 БУНов");
+        if (x > 6) {
+            System.out.println("Стипендия - 70 БУНов");
+            return;
+        }
+        if (x > 5) {
+            System.out.println("Стипендия - 60 БУНов");
         }
     }
 

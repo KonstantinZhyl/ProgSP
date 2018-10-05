@@ -30,7 +30,7 @@ public class PayedStudent extends Student {
         if (x <= 8) {
             System.out.println("Скидки не предусмотрено");
         }
-        if (x > 8) {
+        if ((x > 8) && (x <= 9)) {
             System.out.println("Скидка - 30%");
         }
         if (x > 9) {

@@ -72,7 +72,6 @@ public class PostGrad implements Learner, Object {
 
     @Override
     public void print() {
-        System.out.println("Ha");
-        //todo write print
+        System.out.println(fio + ", научная работа: " + sciWork + ", руководитель: " + sciDir);
     }
 }

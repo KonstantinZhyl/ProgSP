@@ -1,10 +1,31 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
- * Created by ozzy on 05.10.2018.
+ *
+ * @author stud318a
  */
 import java.net.*;
 import java.io.*;
 
 public class UDPClient {
+    
+    boolean proove(String x, String y, String z) {
+        try {
+                Double.valueOf(x);
+                Double.valueOf(y);
+                Double.valueOf(z);
+            }
+            catch(Exception e) {
+                System.out.println("Wrong Input. Write only numbers.");
+                return false;
+            }
+        return true;
+    }
+    
     public void runClient() throws IOException {
         DatagramSocket s = null;    //создание дейтаграммы
         try {
@@ -12,24 +33,38 @@ public class UDPClient {
             s = new DatagramSocket();       //привязка сокета к реальному объету
             System.out.println("UDPClient: Started");
             byte[] verCmd = { 'V', 'E', 'R', 'S' };
+            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+            String x, y, z;
+            while (true) {
+                System.out.print("Enter the x value: ");
+                x = stdin.readLine();
+                System.out.print("Enter the y value: ");
+                y = stdin.readLine();
+                System.out.print("Enter the z value: ");
+                z = stdin.readLine();
+                if (proove(x, y, z)) {
+                    break;
+                }
+            }
+            
+            x += " " + y + " " + z;
+            System.out.println(x);
+            byte[] answer = x.getBytes();
+            
             DatagramPacket sendPacket = new DatagramPacket(verCmd, verCmd.length,
-                    InetAddress.getByName("127.0.0.1"), 8001);      //создание дейтаграммы для отсылки данных
-            s.send(sendPacket);             //посылка дейтаграммы
-            DatagramPacket recvPacket = new DatagramPacket(buf,
-                    buf.length);            //создание дейтаграммы для получения данных
-            s.receive(recvPacket);          //получение дейтаграммы
-            String version = new String(recvPacket.getData()).trim();   //извлечение данных (версии сервера)
-            System.out.println("UDPClient: Server Version: " + version);
-            byte[] quitCmd = { 'Q', 'U', 'I', 'T' };
-            sendPacket.setData(quitCmd);            //установить массив посылаемых данных
-            sendPacket.setLength(quitCmd.length);   //установить длину посылаемых данных
+                    InetAddress.getByName("127.0.0.1"), 8001);      //создание дейтаграммы для отсылки
+            sendPacket.setData(answer);            //установить массив посылаемых данных
+            sendPacket.setLength(answer.length);   //установить длину посылаемых данных
             s.send(sendPacket);                 //послать данные серверу
             System.out.println("UDPClient: Ended");
         }
         finally {
             if (s != null) {
                 s.close();                      //закрытие сокета клиента
-            } } }
+            } 
+        } 
+    }
+    
     public static void main(String[] args) {    //метод main
         try {
             UDPClient client = new UDPClient(); //создание объекта client
